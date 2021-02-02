@@ -1,0 +1,21 @@
+@percent: 100%;
+
+.wh-p {
+    width: @percent;
+    height: @percent;
+}
+
+.app {
+    .wh-p;
+
+    .theme {
+        .wh-p;
+        z-index: 3;
+        position: relative;
+        .ew-content-box {
+            overflow: hidden;
+            .wh-p;
+            position: relative;
+        }
+    }
+}

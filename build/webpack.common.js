@@ -73,7 +73,7 @@ module.exports = {
                         loader: MiniCssExtractPlugin.loader
                     },
                     {
-                        loader:"css-loader",
+                        loader: "css-loader",
                         options: {
                             esModule: false
                         }
@@ -83,11 +83,24 @@ module.exports = {
             {
                 test: /\.less$/,
                 use: ['vue-style-loader', {
-                    loader:"css-loader",
+                    loader: "css-loader",
                     options: {
                         esModule: false
                     }
                 }, 'less-loader']
+            },
+            {
+                test: /\.md$/,
+                use: [
+                    {
+                        loader: "html-loader"
+                    },
+                    {
+                        loader: "markdown-loader",
+                        options: {
+                        }
+                    }
+                ]
             }
         ]
     },

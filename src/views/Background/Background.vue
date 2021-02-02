@@ -33,5 +33,5 @@ export default {
 </script>
 
 <style lang="less" scoped>
- @import url('../../styles/backgroud.less');
+ @import '../../styles/backgroud.less';
 </style>
