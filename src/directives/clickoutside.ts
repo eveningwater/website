@@ -14,6 +14,7 @@ if(!isServer){
     })
 }
 const createDocumentHandler = (el:HTMLElement,binding:DirectiveBinding):DocumentHandler => {
+    // the excluding elements
     let excludes:HTMLElement[] = [];
     if(Array.isArray(binding.arg)){
         excludes = binding.arg;
@@ -30,7 +31,7 @@ const createDocumentHandler = (el:HTMLElement,binding:DirectiveBinding):Document
         const isContainerEl = el.contains(mouseUpTarget) || el.contains(mouseDownTarget);
         const isSelf = el === mouseUpTarget;
         const isContainByPopper = popperRef && (popperRef.contains(mouseUpTarget) || popperRef.contains(mouseDownTarget))
-        const isTargetExcluded = excludes.length && (excludes.some(item => item?.contains(mouseUpTarget)) || excludes.indexOf(mouseDownTarget as HTMLElement) > -1);
+        const isTargetExcluded = excludes.length && (excludes.some(item => item.contains && item?.contains(mouseUpTarget)) || excludes.indexOf(mouseDownTarget as HTMLElement) > -1);
         if(isBinding || isExistTargets || isContainerEl || isSelf || isTargetExcluded || isContainByPopper)return;
         // the directive should binding a method or function
         binding.value();
