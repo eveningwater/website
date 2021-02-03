@@ -42,7 +42,7 @@ const setNodeList = (el,binding) => {
         bindingFn:binding.value
     })
 }
-const clickOutside:ObjectDirective = {
+export const clickOutside:ObjectDirective = {
     beforeMount(el,binding){
         setNodeList(el,binding);
     },

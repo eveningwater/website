@@ -2,7 +2,7 @@
   <Background v-model:snowStatus="show" />
   <div class="theme">
     <div class="ew-content-box">
-      <ewFolderMenu @on-menu-click="onClick" />
+      <ewFolderMenu @on-menu-click="onClick" v-click-outside="clickoutside" />
     </div>
   </div>
 </template>
@@ -21,9 +21,13 @@ export default {
     const onClick =(status) => {
       console.log(status)
     }
+    const clickoutside = () => {
+      console.log('点击该元素之外的区域触发')
+    }
     return {
       ...toRefs(state),
-      onClick
+      onClick,
+      clickoutside
     };
   },
 };
