@@ -7,7 +7,7 @@
 <script lang="ts">
 import { PropType, ref } from 'vue'
 export default {
-    name:"ewFolderMenu",
+    name:"FolderMenu",
     props:{
         total:Number as PropType<number>,
         color:{

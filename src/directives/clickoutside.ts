@@ -16,10 +16,12 @@ if(!isServer){
 const createDocumentHandler = (el:HTMLElement,binding:DirectiveBinding):DocumentHandler => {
     // the excluding elements
     let excludes:HTMLElement[] = [];
-    if(Array.isArray(binding.arg)){
-        excludes = binding.arg;
-    }else{
-        excludes.push(binding.arg as unknown as HTMLElement);
+    if(binding.arg){
+        if(Array.isArray(binding.arg)){
+            excludes = binding.arg;
+        }else{
+            excludes.push(binding.arg as unknown as HTMLElement);
+        }
     }
     return (mouseup,mousedown) => {
         // Maybe we can not considered the tooltip component,which is the popperRef type

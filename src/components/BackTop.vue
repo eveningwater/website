@@ -23,7 +23,7 @@ import {
 } from "vue";
 import util from "../util/util";
 export default {
-  name: "ewBackTop",
+  name: "BackTop",
   props: {
     target: String as PropType<string>,
     right: {
