@@ -9,6 +9,8 @@ interface UtilType extends DataType {
   requestAnimationFrame?: Function;
   on?: Function;
   off?: Function;
+  $?: Function;
+  $$?: Function;
 }
 const util: UtilType = {};
 export const isServer = typeof window === "undefined";
@@ -87,4 +89,6 @@ util["off"] = (
     element.removeEventListener(type, handler, useCapture);
   }
 };
+util["$"] = (selector:string) => document.querySelector(selector);
+util["$$"] = (selector:string) => document.querySelectorAll(selector);
 export default util;

@@ -18,19 +18,19 @@
 </template>
 
 <script lang="ts">
-import { onMounted, PropType, reactive, ref, toRefs } from "vue";
+import { onMounted, PropType, reactive, ref, toRefs, nextTick } from "vue";
 import util from "../util/util";
 export default {
   name: "Tooltip",
   props: {
     theme: {
       type: String as PropType<string>,
-      default: "dark",
+      default: "light",
       validator: (value: string) => ["dark", "light"].indexOf(value) > -1,
     },
     place: {
       type: String as PropType<string>,
-      default: "left",
+      default: "right",
     },
     text: {
       type: String as PropType<string>,
@@ -73,20 +73,45 @@ export default {
     onMounted(() => {
       if (!ctx.slots.default) {
         throw new Error(
-          "You need an element contain trigger propty that triggers the display of the tooltip component!"
+          "You need an element that triggers the display of the tooltip component!"
         );
         return;
       }
       const triggerElements = ctx.slots.default();
+      const setStyle = (item) => {
+        const rect = item.el.getBoundingClientRect();
+        const left = rect.left + parseInt(rect.width) + 8;
+        nextTick(() => {
+          const tooltip = item.el.nextElementSibling;
+          if (!tooltip) return;
+          const tooltipRect = tooltip.getBoundingClientRect();
+          const setTop = () => {
+            tooltip.style.top = rect.top + parseInt(rect.height) + 5 - parseInt(tooltipRect.height) + "px";
+            tooltip.style.left = left + "px";
+          }
+          setTop();
+        });
+      };
       if (props.visible) {
         ctx.emit("update:visible", props.visible);
       }
-      triggerElements.forEach((item) => {
-        util.on(item.el, props.trigger, () => {
-          visible.value = !visible.value;
-        });
+      triggerElements.forEach(item => {
+        if (props.trigger === "manual") return;
+        if (props.trigger === "hover") {
+          util.on(item.el, "mouseenter", () => {
+            visible.value = true;
+            setStyle(item);
+          });
+          util.on(item.el, "mouseleave", () => {
+            visible.value = false;
+          });
+        } else {
+          util.on(item.el, props.trigger, () => {
+            visible.value = !visible.value;
+            setStyle(item);
+          });
+        }
       });
-      
     });
     return {
       arrow,
@@ -107,6 +132,7 @@ export default {
 @darkFontColor: #fff;
 @lightFontColor: #535353;
 .ew-tooltip-container {
+  padding: 10px;
   .ew-tooltip {
     border-radius: 4px;
     z-index: 2000;
@@ -123,28 +149,52 @@ export default {
       width: 0;
       height: 0;
     }
+    .pos {
+      top: 50%;
+      position: absolute;
+      transform: translateY(-50%) rotate(180deg);
+    }
     .ew-tooltip-arrow {
       .arrow-style;
       border-width: 10px;
+      &-right,
+      &-left {
+        .pos;
+      }
+      &-right {
+        right: -20px;
+      }
+      &-left {
+        left: -20px;
+      }
     }
     &-light {
       background-color: @borderLightAfterColor;
       border: 1px solid @borderLightColor;
       color: @lightFontColor;
       .ew-tooltip-arrow {
+        &-right,
+        &-left {
+          &::after {
+            content: "";
+            .arrow-style;
+            border-width: 9px;
+            .pos;
+          }
+        }
         &-right {
           border-right-color: @borderLightColor;
           &::after {
-            border-right-color: @borderLightAfterColor;
-            border-left-width: 0;
+            border-left-color: @borderLightAfterColor;
+            right: -10px;
           }
         }
 
         &-left {
           border-left-color: @borderLightColor;
           &::after {
-            border-left-color: @borderLightAfterColor;
-            border-right-width: 0;
+            border-right-color: @borderLightAfterColor;
+            left: -10px;
           }
         }
 
@@ -181,17 +231,9 @@ export default {
           border-bottom-color: @borderDarkColor;
         }
         &-right {
-          right: -20px;
-          top: 50%;
-          position: absolute;
-          transform: translateY(-50%) rotate(180deg);
           border-right-color: @borderDarkColor;
         }
         &-left {
-          left: -20px;
-          top: 50%;
-          position: absolute;
-          transform: translateY(-50%) rotate(180deg);
           border-left-color: @borderDarkColor;
         }
       }

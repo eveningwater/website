@@ -3,7 +3,7 @@
   <div class="theme">
     <div class="ew-content-box">
       <ew-tooltip text="测试内容" trigger="click">
-        <button style="margin:50px">测试</button>
+        <button>测试</button>
       </ew-tooltip>
     </div>
   </div>

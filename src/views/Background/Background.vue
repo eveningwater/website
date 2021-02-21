@@ -4,6 +4,7 @@
 
 <script lang="ts">
 import { onMounted, PropType, reactive, toRefs } from 'vue';
+import util from '../../util/util';
 import Snow from './snow';
 export default {
     name:"Background",
@@ -18,7 +19,7 @@ export default {
             snowInstace:null
         })
         onMounted(() => {
-            state.snowInstace = new Snow(document.getElementById("ew-bg"),null);
+            state.snowInstace = new Snow(util.$("#ew-bg"),null);
             const loadSnow = () => state.snowInstace.init();
             const removeSnow = () => state.snowInstace.remove();
             ctx.emit("update:snowStatus",props.snowStatus);

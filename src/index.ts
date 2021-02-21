@@ -1,6 +1,7 @@
 import App from './App.vue';
 import { createApp } from 'vue';
 import './styles/reset.less';
+import 'ew-color-picker/dist/ew-color-picker.min.css';
 import directives from './directives';
 const requireComponent = require.context('./components',false,/\w+\.(vue|js)$/);
 const app = createApp(App);
