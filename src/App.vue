@@ -5,6 +5,7 @@
       <ew-tooltip text="测试内容" trigger="click">
         <button>测试</button>
       </ew-tooltip>
+      <ew-color-picker wrapper="#colorPicker" />
     </div>
   </div>
 </template>
@@ -17,6 +18,7 @@ export default {
     Background
   },
   setup() {
+
     const state = reactive({
       show: false
     });

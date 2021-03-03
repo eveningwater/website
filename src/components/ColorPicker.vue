@@ -7,29 +7,8 @@
 </template>
 <script lang="ts">
 import { onMounted, PropType, reactive, Ref, ref, toRefs } from "vue";
-import ewColorPicker from "ew-color-picker";
+import ewColorPicker,{ WrapperType,OptionType } from "ew-color-picker";
 import util from "../util/util";
-
-type WrapperType = string | HTMLElement;
-type OptionType = {
-  el: WrapperType;
-  alpha?: boolean;
-  hue?: boolean;
-  size?:
-    | string
-    | {
-        width?: string | number;
-        height?: string | number;
-      };
-  predefineColor?: string[];
-  disabled?: boolean;
-  defaultColor?: string;
-  openPickerAni?: string;
-  sure?: Function;
-  clear?: Function;
-  isLog?: boolean;
-  openPicker?: Function;
-};
 export default {
   name:"ColorPicker",
   props: {
