@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { onMounted, PropType, reactive, ref, toRefs, nextTick } from "vue";
+import { onMounted, PropType, reactive, ref, toRefs } from "vue";
 import util from "../util/util";
 export default {
   name: "Tooltip",
@@ -78,20 +78,6 @@ export default {
         return;
       }
       const triggerElements = ctx.slots.default();
-      const setStyle = (item) => {
-        const rect = item.el.getBoundingClientRect();
-        const left = rect.left + parseInt(rect.width) + 8;
-        nextTick(() => {
-          const tooltip = item.el.nextElementSibling;
-          if (!tooltip) return;
-          const tooltipRect = tooltip.getBoundingClientRect();
-          const setTop = () => {
-            tooltip.style.top = rect.top + parseInt(rect.height) + 5 - parseInt(tooltipRect.height) + "px";
-            tooltip.style.left = left + "px";
-          }
-          setTop();
-        });
-      };
       if (props.visible) {
         ctx.emit("update:visible", props.visible);
       }
@@ -100,7 +86,6 @@ export default {
         if (props.trigger === "hover") {
           util.on(item.el, "mouseenter", () => {
             visible.value = true;
-            setStyle(item);
           });
           util.on(item.el, "mouseleave", () => {
             visible.value = false;
@@ -108,7 +93,6 @@ export default {
         } else {
           util.on(item.el, props.trigger, () => {
             visible.value = !visible.value;
-            setStyle(item);
           });
         }
       });

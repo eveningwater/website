@@ -2,10 +2,8 @@
   <Background v-model:snowStatus="show" />
   <div class="theme">
     <div class="ew-content-box">
-      <ew-tooltip text="测试内容" trigger="click">
-        <button>测试</button>
-      </ew-tooltip>
-      <ew-color-picker wrapper="#colorPicker" />
+      <Markdown :code="code" />
+      <ew-color-picker wrapper="#test"/>
     </div>
   </div>
 </template>
@@ -13,22 +11,25 @@
 <script>
 import { reactive, toRefs } from "vue";
 import Background from "./views/Background/Background.vue";
+import Markdown from "./components/Markdown.vue";
+import htmlCode1 from "./doc/HTML/html-1.md";
 export default {
   components: {
-    Background
+    Background,
+    Markdown,
   },
   setup() {
-
     const state = reactive({
-      show: false
+      show: false,
+      code: htmlCode1,
     });
     return {
-      ...toRefs(state)
+      ...toRefs(state),
     };
   },
 };
 </script>
 
 <style lang="less">
- @import "./styles/app.less";
+@import "./styles/app.less";
 </style>

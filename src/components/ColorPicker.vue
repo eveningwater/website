@@ -17,7 +17,7 @@ export default {
   },
   setup(props) {
     const wrapper = props.wrapper;
-    const option = props.colorPickerOption;
+    const option:OptionType = props.colorPickerOption;
     const hasSymbol = (value) => ["#", "."].reduce((res, item) => {
       if((value as string).indexOf(item) > -1)return true;
       return res;
